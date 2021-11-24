@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand"><strong>CSTRAVEL</strong></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
+        <li class="nav-item ">
+          <a class="nav-link" aria-current="page" routerLink="/login" routerLinkActive="active"><i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/registro" routerLinkActive="active"><i class="bi bi-person-plus-fill"></i> Registrar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/inicio" routerLinkActive="active"><i class="bi bi-house-fill"></i> Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a *ngIf="_usuarioService.getIdentidad().rol==='ROL_ADMIN'" class="nav-link" routerLink="/usuarios" routerLinkActive="active"><i class="bi bi-people-fill"></i> Usuarios</a>
+        </li>
+      <!--
+        <li class="nav-item">
+          <a *ngIf="_usuarioService.getIdentidad().rol==='ROL_ADMIN'" class="nav-link" aria-current="page" routerLink="/a" routerLinkActive="active"><i class="bi bi-pie-chart-fill"></i> Htls. más solicitados</a>
+        </li>
+      -->
+        <!--
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/a" routerLinkActive="active"><i class="bi bi-bookmark-check-fill"></i> Habs. Disponibles</a>
+        </li>
+        -->
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/reservaciones" routerLinkActive="active"><i class="bi bi-calendar3"></i> Reservaciones</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/hoteles" routerLinkActive="active"><i class="bi bi-building"></i> Hoteles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/habitaciones" routerLinkActive="active"><i class="bi bi-door-open-fill"></i> Habitaciones</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/servicios" routerLinkActive="active"><i class="bi bi-card-checklist"></i> Servicios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/tipoEvento" routerLinkActive="active"><i class="bi bi-card-checklist"></i> Tipos de Eventos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/eventos" routerLinkActive="active"><i class="bi bi-card-list"></i> Eventos</a>
+        </li>
+        <!--
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/a" routerLinkActive="active"><i class="bi bi-cart4"></i> Cuenta</a>
+        </li>
+        -->
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/detalleMiPerfil" routerLinkActive="active"><i class="bi bi-person-badge-fill"></i> Perfil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" routerLink="/login" routerLinkActive="active"><i class="bi bi-box-arrow-right"></i> Salir</a>
+        </li>
+      </ul>
+      <!--
+      <div class="d-flex">
+        <a class="nav-link" *ngIf="_usuarioService.getIdentidad()"><strong>Bienvenido(a):</strong> {{ _usuarioService.getIdentidad().usuario }} </a>
+      </div>
+       -->
+    </div>
+  </div>
+</nav>
+

@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSTRAVEL</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+</head>
+<body>
+<div class="main">
+
+<div class="container">
+  <br>
+  <div class="row justify-content-md-center ">
+    <div class="col col-lg-3">
+      <h5 style= "background-color:white;" class="card-title text-center"><strong>EVENTOS AGREGADOS</strong></h5>
+    </div>
+    <div class="col col-lg-11">
+      <br>
+      <table class="table table-striped table-hover">
+        <thead class="table-dark">
+          <tr class="text-center">
+            <!--<th scope="col">ID EVENTO</th>-->
+            <th scope="col">NOMBRE DEL EVENTO</th>
+            <!--<th scope="col">ID HOTEL</th>-->
+            <th scope="col">NOMBRE DEL HOTEL</th>
+            <!--<th scope="col">ID TIPO DE EVENTO</th>-->
+            <th scope="col">NOMBRE DEL TIPO</th>
+            <th scope="col">FECHA DE INICIO</th>
+            <th scope="col">FECHA DE FINALIZACIÓN</th>
+
+            <th scope="col">MONTO ($)</th>
+
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <tr  *ngFor="let evt of eventosModelGet">
+           <!-- <th scope="row">{{ evt._id }}</th>-->
+            <td>{{ evt.nombre }}</td>
+            <td>{{ evt.idHotel.nombre }}</td>
+            <td>{{ evt.idTipoEvento.nombre }}</td>
+            <!--<td>{{ evt.idHotel }}</td>-->
+           <!-- <td>{{ evt.idTipoEvento }}</td>-->
+            <td>{{ evt.fechaInicio }}</td>
+            <td>{{ evt.fechaFinal }}</td>
+
+            <td>{{ evt.monto }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+<div class="footer">
+  <h5 style="text-align: center; color:white">Copyright © 2021 CSTRAVEL - Carlos Andres Selman David, todos los derechos reservados.</h5>
+</div>
+</body>
+</html>
+

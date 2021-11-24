@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSTRAVEL</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+</head>
+<body>
+<div  class="main">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div style="text-align:center "class="col col-lg-5" >
+          <br>
+          <h1 style="background-color: white; border:black; ">EVENTOS</h1>
+        </div>
+        <div *ngIf="_eventoService.getIdentidad().rol==='ROL_ADMIN'" class="d-grid gap-2 d-md-block">
+          <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#modalAgregarEvento">
+            <i class="bi bi-plus-square"></i> Agregar Evento
+          </button>
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+          <br>
+          <button class="btn btn-primary" type="button" [routerLink]="['/detalleTablaEventos']">
+            <i class="bi bi-table"></i> Tabla de Eventos
+          </button>
+        </div>
+      </div>
+      <br>
+
+     <!--style="background-color: gray; padding:1%; border:black;" -->
+      <div  class="row" >
+        <div class="col-xs-12 col-sm-3" *ngFor="let evt of eventosModelGet; let i = index">
+          <div class="card mb-3 border-dark" style="max-width: 21rem;">
+
+            <small *ngIf="_eventoService.getIdentidad().rol==='ROL_ADMIN'" class=card-header>
+              <div class="dropdown">
+                <button class="btn btn-light btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-three-dots-vertical"> </i>
+                </button>
+                <strong> {{ evt.nombre }}</strong>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a *ngIf="_eventoService.getIdentidad().rol==='ROL_ADMIN'" class="dropdown-item"  (click)="obtenerEvento(evt._id)"
+                    data-bs-toggle="modal" data-bs-target="#modalEditarEvento"><i class="bi bi-pencil-square"></i> | Editar</a></li>
+                  <li><a *ngIf="_eventoService.getIdentidad().rol==='ROL_ADMIN'" class="dropdown-item" (click)="obtenerEvento(evt._id)"
+                    data-bs-toggle="modal" data-bs-target="#modalEliminarEvento"><i class="bi bi-trash-fill"></i> | Eliminar</a></li>
+
+                  <!--<li><a class="dropdown-item" [routerLink]="['/detalleEvento', evt._id]"><i class="bi bi-back"></i> | DETALLE</a></li>-->
+                </ul>
+              </div>
+            </small>
+            <div class="card-body row justify-content-md-center" >
+                <img *ngIf="evt.imagen == ''  " src="/assets/EVT.jpeg" class ="avatar-profile"  >
+                <img *ngIf="evt.imagen " [src]="evt.imagen" class ="avatar-profile">
+            </div>
+            <div class="card-footer ">
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <p class="card-text"><strong><i class="bi bi-cash-stack"></i> MONTO ($):</strong> {{ evt.monto }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="footer">
+  <h5 style="text-align: center; color:white">Copyright © 2021 CSTRAVEL - Carlos Andres Selman David, todos los derechos reservados.</h5>
+</div>
+</body>
+</html>
+
+
+
+ <!-- Modal Agregar Evento -->
+ <div class="modal fade" id="modalAgregarEvento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Evento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="inputNombre" class="form-label"><strong><i class="bi bi-phone-landscape"></i> Nombre:</strong></label>
+            <input type="text" class="form-control" id="inputNombre" name="nombre" #nombre="ngModel"
+              [(ngModel)]="eventosModelAdd.nombre">
+          </div>
+          <div class="mb-3">
+            <label for="inputDescripcion" class="form-label"><strong><i class="bi bi-card-text"></i> Descripción:</strong></label>
+            <textarea class="form-control" id="inputDescripcion" rows="3" name="descripcion" #descripcion="ngModel"
+              [(ngModel)]="eventosModelAdd.descripcion"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="inputMonto" class="form-label"><strong><i class="bi bi-cash-stack"></i> Monto ($):</strong></label>
+            <input type="number" class="form-control" id="inputMonto" name="monto" #monto="ngModel"
+              [(ngModel)]="eventosModelAdd.monto">
+          </div>
+          <hr>
+          <div class="form-group row">
+            <label for="example-date-input" class="col-2 col-form-label"><strong>Fecha de Inicio:</strong></label>
+            <div class="col-10">
+              <input class="form-control" type="date" value="2011-08-19" id="example-date-input"
+              name="fechaInicio" #fechaInicio="ngModel"
+              [(ngModel)]="eventosModelAdd.fechaInicio">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="example-date-input" class="col-2 col-form-label"><strong>Fecha de Finalización:</strong></label>
+            <div class="col-10">
+              <input class="form-control" type="date" value="2011-08-19" id="example-date-input"
+              name="fechaFinal" #fechaFinal="ngModel"
+              [(ngModel)]="eventosModelAdd.fechaFinal">
+            </div>
+          </div>
+          <hr>
+          <label for="example-date-input" class="col-6 col-form-label"><strong>Tipo de Evento:</strong></label>
+          <div class="mb-3">
+            <select  name="idTipoEvento" #idTipoEvento="ngModel"
+              [(ngModel)]="eventosModelAdd.idTipoEvento" class="form-select" aria-label="Default select example">
+              <option *ngFor="let tipev of tiposEventosModelGet" [ngValue]="tipev">{{tipev.nombre}}</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="example-date-input" class="col-2 col-form-label"><strong>Hotel:</strong></label>
+          <select  name="idHotel" #idHotel="ngModel"
+            [(ngModel)]="eventosModelAdd.idHotel" class="form-select" aria-label="Default select example">
+            <option  *ngFor="let htl of hotelesModelGet" [ngValue]="htl">{{htl.nombre}}</option>-->
+          </select>
+      </div>
+      <hr>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> Cerrar</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+          (click)="agregarEventos()"><i class="bi bi-plus-square"></i> Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Evento-->
+<div class="modal fade" id="modalEditarEvento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Evento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="inputNombre" class="form-label"><strong>Nombre:</strong></label>
+            <input type="text" class="form-control" id="inputNombre"
+            name="nombre" #nombre="ngModel" [(ngModel)]="eventosModelGetId.nombre">
+          </div>
+          <div class="mb-3">
+            <label for="inputUsuario" class="form-label"><strong>Descripcion:</strong></label>
+            <input type="text" class="form-control" id="inputUsuario"
+            name="usuario" #usuario="ngModel" [(ngModel)]="eventosModelGetId.descripcion">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"><strong>Monto ($):</strong></label>
+            <input type="number" class="form-control" id="exampleInputEmail1"
+            name="email" #email="ngModel" [(ngModel)]="eventosModelGetId.monto">
+          </div>
+          <div class="form-group row">
+            <label for="example-date-input" class="col-2 col-form-label"><strong>Fecha de Inicio:</strong></label>
+            <div class="col-10">
+              <input class="form-control" type="date" value="2011-08-19" id="example-date-input"
+              name="fechaInicio" #fechaInicio="ngModel"
+              [(ngModel)]="eventosModelGetId.fechaInicio">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="example-date-input" class="col-2 col-form-label"><strong>Fecha de Finalización:</strong></label>
+            <div class="col-10">
+              <input class="form-control" type="date" value="2011-08-19" id="example-date-input"
+              name="fechaFinal" #fechaFinal="ngModel"
+              [(ngModel)]="eventosModelGetId.fechaFinal">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> Cerrar</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="editarEvento()"><i class="bi bi-save"></i> Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Eliminar Evento-->
+<div class="modal fade" id="modalEliminarEvento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar Evento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro de que desea eliminar el Evento, {{ eventosModelGetId.nombre }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> No, cerrar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+        (click)="eliminarEvento(eventosModelGetId._id)"><i class="bi bi-check-square"></i> Si, eliminar <i class="bi bi-trash"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

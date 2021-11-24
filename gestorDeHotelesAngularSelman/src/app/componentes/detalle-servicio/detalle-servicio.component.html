@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSTRAVEL</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+<div class="main">
+
+  <br>
+  <div class="container">
+    <div class="row justify-content-md-center ">
+      <div class="col col-lg-6">
+  <div class="card mb-3">
+    <div class="card-body">
+      <img *ngIf="servicioModel.imagen == ''  " src="/assets/imgserviciosp.jpeg" class="card-img-top" style= "max-height: 200px;" alt="..." >
+      <img *ngIf="servicioModel.imagen " [src]="servicioModel.imagen" class="card-img-top" style= "max-height: 200px;" alt="..." >
+    <hr>
+      <h5 class="card-title text-center">DETALLES DEL SERVICIO</h5>
+      <hr>
+          <form>
+            <div class="mb-3">
+              <label for="inputNombre" class="form-label"><strong><i class="bi bi-phone-landscape"></i> NOMBRE</strong></label>
+              <input type="text" class="form-control" id="inputNombre" name="nombre" #nombre="ngModel"
+                [(ngModel)]="servicioModel.nombre" disabled>
+            </div>
+            <div class="mb-3">
+              <hr>
+              <label for="inputDescripcion" class="form-label"><strong><i class="bi bi-card-text"></i> DESCRIPCIÓN</strong></label>
+              <textarea class="form-control" id="inputDescripcion" rows="3" name="descripcion" #descripcion="ngModel"
+                [(ngModel)]="servicioModel.descripcion" disabled></textarea>
+            </div>
+            <div class="mb-3">
+              <hr>
+              <label for="inputMonto" class="form-label"><strong><i class="bi bi-cash-stack"></i> MONTO ($)</strong></label>
+              <input type="text" class="form-control" id="inputNombre" name="monto" #monto="ngModel"
+                [(ngModel)]="servicioModel.monto" disabled>
+                <hr>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!--
+<div class="footer">
+  <h5 style="text-align: center; color:white">Copyright © 2021 CSTRAVEL - Carlos Andres Selman David, todos los derechos reservados.</h5>
+</div>
+-->

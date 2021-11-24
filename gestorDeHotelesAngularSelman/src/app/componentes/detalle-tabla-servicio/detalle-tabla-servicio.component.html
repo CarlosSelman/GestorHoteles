@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSTRAVEL</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+</head>
+<body>
+<div class="main">
+
+<div class="container">
+  <br>
+  <div class="row justify-content-md-center ">
+    <div class="col col-lg-3">
+      <h5 style= "background-color:white;" class="card-title text-center"><strong>SERVICIOS</strong></h5>
+    </div>
+    <div class="col col-lg-11">
+      <br>
+      <table class="table table-striped table-hover">
+        <thead class="table-dark">
+          <tr class="text-center">
+            <th scope="col">NOMBRE DEL SERVICIO</th>
+            <th scope="col">DESCRIPCIÓN DEL SERVICIO </th>
+            <th scope="col">MONTO ($)</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <tr  *ngFor="let serv of serviciosModelGet">
+            <td>{{ serv.nombre }}</td>
+            <td>{{ serv.descripcion }}</td>
+            <td>{{ serv.monto }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+<div class="footer">
+  <h5 style="text-align: center; color:white">Copyright © 2021 CSTRAVEL - Carlos Andres Selman David, todos los derechos reservados.</h5>
+</div>
+</body>
+</html>
+
+
+
+

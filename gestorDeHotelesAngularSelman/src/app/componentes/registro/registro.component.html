@@ -1,0 +1,53 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSTRAVEL</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+<div class="main">
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col col-lg-5">
+        <!-- <form (ngSubmit)="registrar()"> -->
+
+          <form>
+            <header class="head-form">
+              <h2>Registrar Cuenta</h2>
+
+              <p>Para poderte registrar llena todos los campos que se solicitan a continuación.</p>
+           </header>
+          <div class="mb-3">
+            <hr>
+            <label for="inputNombre" class="form-label"><strong><i class="bi bi-phone-landscape-fill"></i> Nombre:</strong></label>
+            <input type="text" class="form-control" id="inputNombre" name="nombre" #nombre="ngModel" [(ngModel)]="user.nombre">
+          </div>
+          <div class="mb-3">
+            <label for="inputUsuario" class="form-label"><strong><i class="bi bi-person-circle"></i> Usuario:</strong></label>
+            <input type="text" class="form-control" id="inputUsuario" name="usuario" #usuario="ngModel" [(ngModel)]="user.usuario">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"><strong><i class="bi bi-envelope-fill"></i> Correo:</strong></label>
+            <input type="email" class="form-control" id="exampleInputEmail1" name="email" #email="ngModel" [(ngModel)]="user.email">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"><strong><i class="bi bi-key-fill"></i> Contraseña:</strong></label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="password" #password="ngModel" [(ngModel)]="user.password">
+          </div>
+          <button type="submit" class="btn btn-success" (click)="registrar()"><i class="bi bi-person-plus-fill"></i> | Registrar</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <h5 style="text-align: center; color:white">Copyright © 2021 CSTRAVEL - Carlos Andres Selman David, todos los derechos reservados.</h5>
+</div>
+</body>
+</html>
+

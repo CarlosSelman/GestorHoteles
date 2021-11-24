@@ -1,0 +1,149 @@
+
+
+<!-- Modal Editar Usuario -->
+<div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="inputNombre" class="form-label"><strong>Nombre:</strong></label>
+            <input type="text" class="form-control" id="inputNombre"
+            name="nombre" #nombre="ngModel" [(ngModel)]="idUsuarioModel.nombre">
+          </div>
+          <div class="mb-3">
+            <label for="inputUsuario" class="form-label"><strong>Usuario:</strong></label>
+            <input type="text" class="form-control" id="inputUsuario"
+            name="usuario" #usuario="ngModel" [(ngModel)]="idUsuarioModel.usuario">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"><strong>Correo:</strong></label>
+            <input type="email" class="form-control" id="exampleInputEmail1"
+            name="email" #email="ngModel" [(ngModel)]="idUsuarioModel.email">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> Cerrar</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="editarUsuario()"><i class="bi bi-save"></i> Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Eliminar Usuario -->
+<div class="modal fade" id="modalEliminarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro de que desea eliminar el Usuario, {{ idUsuarioModel.usuario }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> No, cerrar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+        (click)="eliminarUsuario(idUsuarioModel._id)"><i class="bi bi-check-square"></i> Si, eliminar <i class="bi bi-trash"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Ver Usuario -->
+<div class="modal fade" id="modalVerUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ver Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="inputNombre" class="form-label"><strong>Nombre:</strong></label>
+            <input type="text" class="form-control" id="inputNombre"
+            name="nombre" #nombre="ngModel" [(ngModel)]="idUsuarioModel.nombre" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="inputUsuario" class="form-label"><strong>Usuario:</strong></label>
+            <input type="text" class="form-control" id="inputUsuario"
+            name="usuario" #usuario="ngModel" [(ngModel)]="idUsuarioModel.usuario" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"><strong>Correo:</strong></label>
+            <input type="email" class="form-control" id="exampleInputEmail1"
+            name="email" #email="ngModel" [(ngModel)]="idUsuarioModel.email" disabled>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSTRAVEL</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+</head>
+<body>
+<div class="main">
+
+<div class="container">
+  <br>
+  <div class="row justify-content-md-center ">
+    <div class="col col-lg-3">
+      <h5 style= "background-color:white;" class="card-title text-center"><strong>USUARIOS REGISTRADOS</strong></h5>
+    </div>
+    <div class="col col-lg-11">
+      <br>
+      <table class="table table-striped table-hover">
+        <thead class="table-dark">
+          <tr class="text-center">
+            <th scope="col">ID</th>
+            <th scope="col">NOMBRE</th>
+            <th scope="col">USUARIO</th>
+            <th scope="col">EMAIL</th>
+            <th scope="col">ACCIONES</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <tr *ngFor="let usua of usuarios">
+            <th scope="row">{{ usua._id }}</th>
+            <td>{{ usua.nombre }}</td>
+            <td>{{ usua.usuario }}</td>
+            <td>{{ usua.email }}</td>
+            <td>
+              <div class="btn-group" role="group" aria-label="Basic example" >
+                <button *ngIf="_usuarioService.getIdentidad().rol==='ROL_ADMIN'"  type="button" class="btn-xs btn-success" (click)="obtenerUsuarioId(usua._id)"
+                data-bs-toggle="modal" data-bs-target="#modalEditarUsuario"><i class="bi bi-pencil-square"></i></button>
+                <button *ngIf="_usuarioService.getIdentidad().rol==='ROL_ADMIN'"  type="button" class="btn-xs btn-success" (click)="obtenerUsuarioId(usua._id)"
+                data-bs-toggle="modal" data-bs-target="#modalEliminarUsuario"><i class="bi bi-trash-fill"></i></button>
+                <button type="button" class="btn-xs btn-success" (click)="obtenerUsuarioId(usua._id)"
+                data-bs-toggle="modal" data-bs-target="#modalVerUsuario"><i class="bi bi-back"></i></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+<div class="footer">
+  <h5 style="text-align: center; color:white">Copyright © 2021 CSTRAVEL - Carlos Andres Selman David, todos los derechos reservados.</h5>
+</div>
+</body>
+</html>

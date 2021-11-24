@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSTRAVEL</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+</head>
+<body>
+<div class="main">
+  <div  class="container ">
+    <div class="row justify-content-md-center">
+      <div class="col col-lg-4">
+        <!-- <form (ngSubmit)="getToken()"> -->
+        <form class>
+          <header class="head-form">
+            <h2>Iniciar Sesión</h2>
+
+            <p>Para iniciar sesión es necesario colocar el correo y la contraseña</p>
+         </header>
+          <div class="mb-3">
+            <hr>
+            <label for="exampleInputEmail1" class="form-label"><strong><i class="bi bi-envelope-fill"></i> Correo:</strong></label>
+            <input type="email" class="form-control" id="exampleInputEmail1" name="email" #email="ngModel"
+              [(ngModel)]="usuarioModel.email" aria-describedby="emailHelp" >
+            <div style="color:black" id="emailHelp" class="form-text">No compartas tus credenciales...</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"><strong><i class="bi bi-key-fill"></i> Contraseña:</strong></label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="password" #password="ngModel"
+              [(ngModel)]="usuarioModel.password">
+          </div>
+          <button type="submit" class="btn btn-success" (click)="login()"><i class="bi bi-box-arrow-in-right"></i> | Ingresar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <h5 style="text-align: center; color:white">Copyright © 2021 CSTRAVEL - Carlos Andres Selman David, todos los derechos reservados.</h5>
+</div>
+</body>
+</html>

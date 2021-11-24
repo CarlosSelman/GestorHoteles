@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSTRAVEL</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+</head>
+<body>
+<div  class="main">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div style="text-align:center "class="col col-lg-5" >
+          <br>
+          <h1 style="background-color: white; border:black; ">HABITACIONES</h1>
+        </div>
+        <div *ngIf="_habitacionService.getIdentidad().rol==='ROL_ADMIN'" class="d-grid gap-2 d-md-block">
+          <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#modalAgregarHabitacion">
+            <i class="bi bi-plus-square"></i> Agregar Habitación
+          </button>
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+          <br>
+          <button class="btn btn-primary" type="button" [routerLink]="['/detalleTablaHabitaciones']">
+            <i class="bi bi-table"></i> Tabla de Habitaciones
+          </button>
+        </div>
+      </div>
+      <br>
+
+     <!--style="background-color: gray; padding:1%; border:black;" -->
+      <div  class="row" >
+        <div class="col-xs-12 col-sm-3" *ngFor="let hbt of habitacionesModelGet; let i = index">
+          <div class="card mb-3 border-dark" style="max-width: 21rem;">
+
+            <small *ngIf="_habitacionService.getIdentidad().rol==='ROL_ADMIN'" class=card-header>
+              <div class="dropdown">
+                <button class="btn btn-light btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-three-dots-vertical"> </i>
+                </button>
+                <strong> {{ hbt.nombre }}</strong>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a *ngIf="_habitacionService.getIdentidad().rol==='ROL_ADMIN'" class="dropdown-item"  (click)="obtenerHabitacion(hbt._id)"
+                    data-bs-toggle="modal" data-bs-target="#modalEditarHabitacion"><i class="bi bi-pencil-square"></i> | Editar</a></li>
+                  <li><a *ngIf="_habitacionService.getIdentidad().rol==='ROL_ADMIN'" class="dropdown-item" (click)="obtenerHabitacion(hbt._id)"
+                    data-bs-toggle="modal" data-bs-target="#modalEliminarHabitacion"><i class="bi bi-trash-fill"></i> | Eliminar</a></li>
+                  <!--<li><a class="dropdown-item" [routerLink]="['/detalleEvento', evt._id]"><i class="bi bi-back"></i> | DETALLE</a></li>-->
+                </ul>
+              </div>
+            </small>
+            <div class="card-body row justify-content-md-center" >
+                <img *ngIf="hbt.imagen == ''  " src="/assets/imgHab.jpg" class ="avatar-profile"  >
+                <img *ngIf="hbt.imagen " [src]="hbt.imagen" class ="avatar-profile">
+            </div>
+            <div class="card-footer ">
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <p class="card-text"><strong><i class="bi bi-cash-stack"></i> MONTO ($):</strong> {{ hbt.monto }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="footer">
+  <h5 style="text-align: center; color:white">Copyright © 2021 CSTRAVEL - Carlos Andres Selman David, todos los derechos reservados.</h5>
+</div>
+</body>
+</html>
+
+ <!-- Modal Agregar Habitacion -->
+ <div class="modal fade" id="modalAgregarHabitacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Habitación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="inputNombre" class="form-label"><strong><i class="bi bi-phone-landscape"></i> Nombre:</strong></label>
+            <input type="text" class="form-control" id="inputNombre" name="nombre" #nombre="ngModel"
+              [(ngModel)]="habitacionesModelAdd.nombre">
+          </div>
+          <div class="mb-3">
+            <label for="inputDescripcion" class="form-label"><strong><i class="bi bi-card-text"></i> Descripción:</strong></label>
+            <textarea class="form-control" id="inputDescripcion" rows="3" name="descripcion" #descripcion="ngModel"
+              [(ngModel)]="habitacionesModelAdd.descripcion"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="inputMonto" class="form-label"><strong><i class="bi bi-cash-stack"></i> Monto ($):</strong></label>
+            <input type="number" class="form-control" id="inputMonto" name="monto" #monto="ngModel"
+              [(ngModel)]="habitacionesModelAdd.monto">
+          </div>
+          <hr>
+        <div class="mb-3">
+          <select  name="idHotel" #idHotel="ngModel"
+            [(ngModel)]="habitacionesModelAdd.idHotel" class="form-select" aria-label="Default select example">
+            <option selected>Escoja el hotel...</option>
+            <option  *ngFor="let htl of hotelesModelGet" [ngValue]="htl">{{htl.nombre}}</option>-->
+          </select>
+      </div>
+      <hr>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> Cerrar</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+          (click)="agregarHabitacion()"><i class="bi bi-plus-square"></i> Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Habitacion-->
+<div class="modal fade" id="modalEditarHabitacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Habitación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="inputNombre" class="form-label"><strong>Nombre:</strong></label>
+            <input type="text" class="form-control" id="inputNombre"
+            name="nombre" #nombre="ngModel" [(ngModel)]="habitacionesModelGetId.nombre">
+          </div>
+          <div class="mb-3">
+            <label for="inputUsuario" class="form-label"><strong>Descripcion:</strong></label>
+            <input type="text" class="form-control" id="inputUsuario"
+            name="usuario" #usuario="ngModel" [(ngModel)]="habitacionesModelGetId.descripcion">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"><strong>Monto ($):</strong></label>
+            <input type="number" class="form-control" id="exampleInputEmail1"
+            name="email" #email="ngModel" [(ngModel)]="habitacionesModelGetId.monto">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> Cerrar</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="editarHabitacion()"><i class="bi bi-save"></i> Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Eliminar Habitacion-->
+<div class="modal fade" id="modalEliminarHabitacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar Evento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro de que desea eliminar la Habitación, {{ habitacionesModelGetId.nombre }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> No, cerrar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+        (click)="eliminarHabitacion(habitacionesModelGetId._id)"><i class="bi bi-check-square"></i> Si, eliminar <i class="bi bi-trash"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

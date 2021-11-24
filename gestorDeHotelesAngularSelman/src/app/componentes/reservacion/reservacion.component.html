@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSTRAVEL</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+</head>
+<body>
+<div  class="main">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div style="text-align:center "class="col col-lg-5" >
+          <br>
+          <h1 style="background-color: white; border:black; ">RESERVACIONES</h1>
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+          <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#modalAgregarReservacion">
+            <i class="bi bi-plus-square"></i> Agregar Reservación
+          </button>
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+          <br>
+          <button class="btn btn-primary" type="button" [routerLink]="['/detalleTablaReservaciones']">
+            <i class="bi bi-table"></i> Tabla de Reservaciones
+          </button>
+        </div>
+      </div>
+      <br>
+
+     <!--style="background-color: gray; padding:1%; border:black;" -->
+      <div  class="row" >
+        <div class="col-xs-12 col-sm-3" *ngFor="let resv of reservacionesModelGet; let i = index">
+          <div class="card mb-3 border-dark" style="max-width: 21rem;">
+
+            <small *ngIf="_reservacionService.getIdentidad().rol==='ROL_ADMIN'" class=card-header>
+              <div class="dropdown">
+                <button class="btn btn-light btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-three-dots-vertical"> </i>
+                </button>
+                <strong> {{ resv.nombre }}</strong>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a *ngIf="_reservacionService.getIdentidad().rol==='ROL_ADMIN'" class="dropdown-item"  (click)="obtenerReservacion(resv._id)"
+                    data-bs-toggle="modal" data-bs-target="#modalEditarReservacion"><i class="bi bi-pencil-square"></i> | Editar</a></li>
+                  <li><a *ngIf="_reservacionService.getIdentidad().rol==='ROL_ADMIN'" class="dropdown-item" (click)="obtenerReservacion(resv._id)"
+                    data-bs-toggle="modal" data-bs-target="#modalEliminarReservacion"><i class="bi bi-trash-fill"></i> | Eliminar</a></li>
+
+                  <!--<li><a class="dropdown-item" [routerLink]="['/detalleEvento', evt._id]"><i class="bi bi-back"></i> | DETALLE</a></li>-->
+                </ul>
+              </div>
+            </small>
+            <div class="card-body row justify-content-md-center" >
+                <img *ngIf="resv.imagen == ''  " src="/assets/EVT.jpeg" class ="avatar-profile"  >
+                <img *ngIf="resv.imagen " [src]="resv.imagen" class ="avatar-profile">
+            </div>
+            <div class="card-footer ">
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <p class="card-text"><strong><i class="bi bi-cash-stack"></i> MONTO ($):</strong> {{ resv.monto }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="footer">
+  <h5 style="text-align: center; color:white">Copyright © 2021 CSTRAVEL - Carlos Andres Selman David, todos los derechos reservados.</h5>
+</div>
+</body>
+</html>
+
+
+
+ <!-- Modal Agregar Reservacion -->
+ <div class="modal fade" id="modalAgregarReservacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Reservación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="inputNombre" class="form-label"><strong><i class="bi bi-phone-landscape"></i> Nombre:</strong></label>
+            <input type="text" class="form-control" id="inputNombre" name="nombre" #nombre="ngModel"
+              [(ngModel)]="reservacionesModelAdd.nombre">
+          </div>
+          <div class="mb-3">
+            <label for="inputDescripcion" class="form-label"><strong><i class="bi bi-card-text"></i> Descripción:</strong></label>
+            <textarea class="form-control" id="inputDescripcion" rows="3" name="descripcion" #descripcion="ngModel"
+              [(ngModel)]="reservacionesModelAdd.descripcion"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="inputMonto" class="form-label"><strong><i class="bi bi-cash-stack"></i> Monto ($):</strong></label>
+            <input type="number" class="form-control" id="inputMonto" name="monto" #monto="ngModel"
+              [(ngModel)]="reservacionesModelAdd.monto">
+          </div>
+          <hr>
+          <div class="form-group row">
+            <label for="example-date-input" class="col-2 col-form-label"><strong>Fecha de Inicio:</strong></label>
+            <div class="col-10">
+              <input class="form-control" type="date" value="2011-08-19" id="example-date-input"
+              name="fechaInicio" #fechaInicio="ngModel"
+              [(ngModel)]="reservacionesModelAdd.fechaInicio">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="example-date-input" class="col-2 col-form-label"><strong>Fecha de Finalización:</strong></label>
+            <div class="col-10">
+              <input class="form-control" type="date" value="2011-08-19" id="example-date-input"
+              name="fechaFinal" #fechaFinal="ngModel"
+              [(ngModel)]="reservacionesModelAdd.fechaFinal">
+            </div>
+          </div>
+          <hr>
+
+        <div class="mb-3">
+          <label for="example-date-input" class="col-2 col-form-label"><strong>Habitación:</strong></label>
+          <select  name="idHabitacion" #idHabitacion="ngModel"
+            [(ngModel)]="reservacionesModelAdd.idHabitacion" class="form-select" aria-label="Default select example">
+            <option  *ngFor="let hbt of habitacionesModelGet" [ngValue]="hbt">{{hbt.nombre}}</option>-->
+          </select>
+      </div>
+      <hr>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> Cerrar</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+          (click)="agregarReservaciones()"><i class="bi bi-plus-square"></i> Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Reservación-->
+<div class="modal fade" id="modalEditarReservacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Reservación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="inputNombre" class="form-label"><strong>Nombre:</strong></label>
+            <input type="text" class="form-control" id="inputNombre"
+            name="nombre" #nombre="ngModel" [(ngModel)]="reservacionesModelGetId.nombre">
+          </div>
+          <div class="mb-3">
+            <label for="inputUsuario" class="form-label"><strong>Descripcion:</strong></label>
+            <input type="text" class="form-control" id="inputUsuario"
+            name="usuario" #usuario="ngModel" [(ngModel)]="reservacionesModelGetId.descripcion">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"><strong>Monto ($):</strong></label>
+            <input type="number" class="form-control" id="exampleInputEmail1"
+            name="email" #email="ngModel" [(ngModel)]="reservacionesModelGetId.monto">
+          </div>
+          <div class="form-group row">
+            <label for="example-date-input" class="col-2 col-form-label"><strong>Fecha de Inicio:</strong></label>
+            <div class="col-10">
+              <input class="form-control" type="date" value="2011-08-19" id="example-date-input"
+              name="fechaInicio" #fechaInicio="ngModel"
+              [(ngModel)]="reservacionesModelGetId.fechaInicio">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="example-date-input" class="col-2 col-form-label"><strong>Fecha de Finalización:</strong></label>
+            <div class="col-10">
+              <input class="form-control" type="date" value="2011-08-19" id="example-date-input"
+              name="fechaFinal" #fechaFinal="ngModel"
+              [(ngModel)]="reservacionesModelGetId.fechaFinal">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> Cerrar</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="editarReservacion()"><i class="bi bi-save"></i> Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Eliminar Reservacion-->
+<div class="modal fade" id="modalEliminarReservacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar Reservación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro de que desea eliminar la Reservación, {{ reservacionesModelGetId.nombre }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-square"></i> No, cerrar</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+        (click)="eliminarReservacion(reservacionesModelGetId._id)"><i class="bi bi-check-square"></i> Si, eliminar <i class="bi bi-trash"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

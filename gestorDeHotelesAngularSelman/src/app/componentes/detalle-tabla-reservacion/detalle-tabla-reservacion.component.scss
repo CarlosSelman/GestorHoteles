@@ -1,0 +1,49 @@
+.modal-footer{
+  background-color: gray;
+  border: white solid
+}
+
+.btn{
+  border: white solid
+}
+
+.modal-header{
+  background-color: gray;
+  border: white solid
+}
+
+.modal-title{
+  color: white ;
+}
+
+/*---------------------*/
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+.table{
+  background-color:white;
+}
+.main {
+  background-image: url(https://cdn.shopify.com/s/files/1/0879/0542/products/PC830@2x.jpg?v=1514007510);
+  background-position: bottom;
+  overflow: hidden;
+  height: 95vh;
+}
+.footer {
+  height: 5vh;
+  background-color: rgb(12, 12, 12);
+}
+.main .title {
+  border: 1px solid #fff;
+  width: 300px;
+  height: 50px;
+  text-align: center;
+  background-color: black;
+  color: rgb(255, 255, 255);
+  top: calc(80vh - 45%);
+  left: 50%;
+  position: absolute;
+  margin-left: -150px;
+}
